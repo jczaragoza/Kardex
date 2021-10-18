@@ -1,0 +1,24 @@
+from django.forms import *
+from core.erp.models import Persona
+
+
+class PersonaForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['curp'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Persona
+        fields = '__all__'
+        widgets = {
+            'curp': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese tu CURP'
+                }
+            ),
+            'nombre': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese tu nombre'
+                }
+            ),
+        }

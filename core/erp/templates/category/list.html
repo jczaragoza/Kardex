@@ -1,0 +1,32 @@
+{% extends 'list.html' %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 5%;">Nro</th>
+        <th scope="col" style="width: 15%;">CURP</th>
+        <th scope="col" style="width: 25%;">Nombre(s)</th>
+        <th scope="col" style="width: 25%;">Apellido Paterno</th>
+        <th scope="col" style="width: 25%;">Apellido Materno</th>
+        <th scope="col" style="width: 5%;">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+    {% for c in object_list %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.curp }}</td>
+            <td>{{ c.nombre }}</td>
+            <td>{{ c.apaterno }}</td>
+            <td>{{ c.amaterno }}</td>
+            <td>
+                <button type="button" class="btn btn-warning btn-xs btn-sm">
+                   <i class="fas fa-user-edit"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-xs btn-sm">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
