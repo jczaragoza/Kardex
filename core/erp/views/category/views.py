@@ -29,7 +29,11 @@ class PersonaListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        data = {'name':'Juan'}
+        data = {}
+        try:
+            data = Category.objects.get(pk=request.POST['id']).toJSON()
+        except Exception as e:
+            data['error'] = str(e)
         return JsonResponse(data)
 
     def get_context_data(self, **kwargs):
@@ -48,21 +52,22 @@ class PersonaCreateView(CreateView):
     success_url = reverse_lazy('kardex:category_list')
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
-        form = PersonaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(self.success_url)
-        self.object = None
-        context = self.get_context_data(**kwargs)
-        context['form'] = form
-        return render(request, self.template_name, context)
-
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'add':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Crear de Alumno'
         context['entity'] = 'Alumnos'
         context['list_url'] = reverse_lazy('kardex:category_list')
-
+        context['action'] = 'add'
         return context
