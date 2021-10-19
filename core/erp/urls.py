@@ -9,5 +9,6 @@ urlpatterns = [
     path('add/', PersonaCreateView.as_view(), name='category_create'),
     path('update/<int:pk>/', PersonaUpdateView.as_view(), name='category_update'),
     path('delete/<int:pk>/', PersonaDeleteView.as_view(), name='category_delete'),
+    path('form/', PersonaFormView.as_view(), name='category_form'),
 ]
 

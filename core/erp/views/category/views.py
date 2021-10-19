@@ -1,10 +1,8 @@
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
 
 from core.erp.models import Estado, Persona
 from core.erp.forms import PersonaForm
@@ -127,4 +125,28 @@ class PersonaDeleteView(DeleteView):
         context['title'] = 'Borrar  Alumno'
         context['entity'] = 'Alumnos'
         context['list_url'] = reverse_lazy('kardex:category_list')
+        return context
+
+
+class PersonaFormView(FormView):
+    form_class = PersonaForm
+    template_name = 'category/create.html'
+    success_url = reverse_lazy('kardex:category_list')
+
+    def form_valid(self, form):
+        print(form.is_valid())
+        print(form)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print(form.is_valid())
+        print(form.errors)
+        return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Form | Alumnos'
+        context['entity'] = 'Alumnos'
+        context['list_url'] = reverse_lazy('kardex:category_list')
+        context['action'] = 'add'
         return context
