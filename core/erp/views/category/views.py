@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 
 from core.erp.models import Estado, Persona
@@ -15,15 +15,16 @@ def category_list(request):
         'title': 'Listado de Alumnos',
         'personas': Persona.objects.all()
     }
-    return render (request, 'category/list.html', data)
+    return render(request, 'category/list.html', data)
 
 
 class PersonaListView(ListView):
     model = Persona
     template_name = 'category/list.html'
 
-    #def get_queryset(self):
+    # def get_queryset(self):
     #    return Persona.objects.filter(curp__startswith='C')
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -70,4 +71,62 @@ class PersonaCreateView(CreateView):
         context['entity'] = 'Alumnos'
         context['list_url'] = reverse_lazy('kardex:category_list')
         context['action'] = 'add'
+        return context
+
+
+class PersonaUpdateView(UpdateView):
+    model = Persona
+    form_class = PersonaForm
+    template_name = 'category/create.html'
+    success_url = reverse_lazy('kardex:category_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar Datos de Alumno'
+        context['entity'] = 'Alumnos'
+        context['list_url'] = reverse_lazy('kardex:category_list')
+        context['action'] = 'edit'
+        return context
+
+
+class PersonaDeleteView(DeleteView):
+    model = Persona
+    template_name = 'category/delete.html'
+    success_url = reverse_lazy('kardex:category_list')
+
+    # @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            self.object.delete()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Borrar  Alumno'
+        context['entity'] = 'Alumnos'
+        context['list_url'] = reverse_lazy('kardex:category_list')
         return context

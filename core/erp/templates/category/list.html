@@ -20,12 +20,12 @@
             <td>{{ c.apaterno }}</td>
             <td>{{ c.amaterno }}</td>
             <td>
-                <button type="button" class="btn btn-warning btn-xs btn-sm">
+                <a href="{% url 'kardex:category_update' c.id %}" type="button" class="btn btn-warning btn-xs btn-sm">
                    <i class="fas fa-user-edit"></i>
-                </button>
-                <button type="button" class="btn btn-danger btn-xs btn-sm">
-                    <i class="fas fa-trash"></i>
-                </button>
+                </a>
+                <a href="{% url 'kardex:category_delete' c.id %}" type="button" class="btn btn-danger btn-xs btn-flat">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
             </td>
         </tr>
     {% endfor %}

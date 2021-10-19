@@ -21,6 +21,12 @@ class PersonaForm(ModelForm):
                     'placeholder': 'Ingrese tu nombre'
                 }
             ),
+            'foto': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese tu nombre'
+                }
+
+            ),
         }
 
     def save(self, commit=True):
