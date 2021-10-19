@@ -28,7 +28,7 @@ class Persona(models.Model):
     nombre = models.CharField(max_length=25, verbose_name='Nombre')
     apaterno = models.CharField(max_length=25, verbose_name='Apellido Paterno')
     amaterno = models.CharField(max_length=25, verbose_name='Apellido Materno')
-    foto = models.ImageField(blank=True, null=True, upload_to='persona/fotos')
+    #foto = models.ImageField(blank=True, null=True, upload_to='persona/fotos')
     fecha_nacimiento = models.DateField(blank=True, null=True, verbose_name='Fechas de Nacimiento')
     lugar_nacimiento = models.CharField(max_length=255, blank=True, null=True, verbose_name='Lugar de Nacimiento')
     rfc = models.CharField(max_length=13, blank=True, verbose_name='RFC')
@@ -61,8 +61,8 @@ class Persona(models.Model):
     nacionalidad = models.CharField(max_length=1, choices=nacionalida_com, default='M')
     correo = models.EmailField(max_length=50, blank=True, null=True, verbose_name='Correo')
     escolaridad = models.CharField(max_length=255, blank=True, verbose_name='Escolaridad' )
-    f_registo= models.DateField(default=datetime.now, verbose_name='Fecha de registro')
-    f_modificado  = models.DateTimeField(auto_now=True, verbose_name='Fecha de modificación')
+    #f_registo= models.DateField(default=datetime.now, verbose_name='Fecha de registro')
+    #f_modificado  = models.DateTimeField(auto_now=True, verbose_name='Fecha de modificación')
 
     def __str__(self):
         return self.nombre

@@ -1,4 +1,8 @@
 {% extends 'list.html' %}
+{% load static %}
+{% block head_list %}
+    <script src="{% static 'category/js/list.js' %}"></script>
+{% endblock %}
 
 {% block columns %}
     <tr>
@@ -12,21 +16,9 @@
 {% endblock %}
 
 {% block rows %}
-    {% for c in object_list %}
-        <tr>
-            <td>{{ c.id }}</td>
-            <td>{{ c.curp }}</td>
-            <td>{{ c.nombre }}</td>
-            <td>{{ c.apaterno }}</td>
-            <td>{{ c.amaterno }}</td>
-            <td>
-                <a href="{% url 'kardex:category_update' c.id %}" type="button" class="btn btn-warning btn-xs btn-sm">
-                   <i class="fas fa-user-edit"></i>
-                </a>
-                <a href="{% url 'kardex:category_delete' c.id %}" type="button" class="btn btn-danger btn-xs btn-flat">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
+
+{% endblock %}
+
+{% block javascript %}
+
 {% endblock %}
