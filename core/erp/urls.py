@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from django.urls import path
 from core.erp.views.category.views import *
+from core.erp.views.dashboard.views import *
 
 app_name = 'kardex'
 
@@ -10,5 +11,6 @@ urlpatterns = [
     path('update/<int:pk>/', PersonaUpdateView.as_view(), name='category_update'),
     path('delete/<int:pk>/', PersonaDeleteView.as_view(), name='category_delete'),
     path('form/', PersonaFormView.as_view(), name='category_form'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
 ]
 
