@@ -1,3 +1,4 @@
+
 {% load static %}
 {% load widget_tweaks %}
 <!DOCTYPE html>
@@ -8,7 +9,7 @@
     <title>{{ title }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Font Awesome -->
+    <!-- Font Awesome-->
     <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/plugins/font-awesome-5.11.1/css/all.min.css' %}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/css/adminlte.min.css' %}">
@@ -16,62 +17,108 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- Sweetalert2 -->
     <script src="{% static 'lib/sweetalert2-9.10.0/sweetalert2.all.min.js' %}"></script>
+
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="{% static 'plugin/images/icons/favicon.ico' %}"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/vendor/animate/animate.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/vendor/css-hamburgers/hamburgers.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/vendor/animsition/css/animsition.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/vendor/select2/select2.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/vendor/daterangepicker/daterangepicker.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/css/util.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/css/main.css' %}">
+    <!--===============================================================================================-->
+
 </head>
-<body class="hold-transition login-page">
-<div class="login-box">
-    <div class="login-logo">
-        <a href="{% url 'index' %}"><b>ZENYA</b></a>
-    </div>
-    <div class="card">
-        <div class="card-body login-card-body">
-            <p class="login-box-msg">Iniciar sesión</p>
-            <form action="." method="post">
+
+<body>
+
+	<div class="limiter" >
+		<div class="container-login100" style="background-image: url({% static 'plugin/images/bg-04.jpg' %})">
+			<div class="wrap-login100">
+				<div class="login100-form-title" style="background-image: url({% static 'plugin/images/bg-01.jpg' %})">
+					<span class="login100-form-title-1">
+						Sign In
+					</span>
+				</div>
+
+                <form action="." method="post" class="login100-form validate-form">
+                <input type="hidden" name="next" value="{{ next }}">
                 {% csrf_token %}
-                <div class="input-group mb-3">
-                    {{ form.username|add_class:'form-control'|attr:'autocomplete:off'|attr:'placeholder:Ingrese su usuario' }}
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    {{ form.password|add_class:'form-control'|attr:'autocomplete:off'|attr:'placeholder:Ingrese su password' }}
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <button type="submit" class="btn btn-primary btn-block">
-                            <i class="fas fa-sign-in-alt"></i> Iniciar sesión
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <script type="application/javascript">
-        {% if form.errors %}
-            var errors = '';
-            {% for field in form %}
-                {% for error in field.errors %}
-                    errors += '{{ error }}\n';
-                {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
+					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+						<span class="label-input100">Usuario</span>
+						{{ form.username|add_class:'input100'|attr:'autocomplete:off'|attr:'placeholder:Ingrese su usuario' }}
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">Contraseña</span>
+						{{ form.password|add_class:'input100'|attr:'autocomplete:off'|attr:'placeholder:Ingrese su password' }}
+						<span class="focus-input100"></span>
+					</div>
+
+
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Login
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<!--===============================================================================================-->
+<script src="{% static 'plugin/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'plugin/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'plugin/vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'plugin/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'plugin/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'plugin/vendor/daterangepicker/moment.min.js' %}"></script>
+<script src="{% static 'plugin/vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'plugin/vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'plugin/js/main.js' %}"></script>
+
+</body>
+
+<script type="application/javascript">
+    {% if form.errors %}
+        var errors = '';
+        {% for field in form %}
+            {% for error in field.errors %}
                 errors += '{{ error }}\n';
             {% endfor %}
-            Swal.fire({
-                title: 'Error!',
-                text: errors,
-                icon: 'error'
-            });
-        {% endif %}
-    </script>
-</div>
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            errors += '{{ error }}\n';
+        {% endfor %}
+        Swal.fire({
+            title: 'Error!',
+            text: errors,
+            icon: 'error'
+        });
+    {% endif %}
+</script>
+
 <!-- jQuery -->
 <script src="{% static 'lib/adminlte-3.0.4/plugins/jquery/jquery.min.js' %}"></script>
 <!-- Bootstrap 4 -->

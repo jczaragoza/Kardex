@@ -8,6 +8,7 @@
     <script src="{% static 'lib/datatables-1.10.20/js/dataTables.bootstrap4.min.js' %}"></script>
     <script src="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/js/dataTables.responsive.min.js' %}"></script>
     <script src="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/js/responsive.bootstrap4.min.js' %}"></script>
+
     {% block head_list %}
 
     {% endblock %}
@@ -40,6 +41,9 @@
             <a href="{{ create_url }}" class="btn btn-primary btn-flat btnTest">
                 <i class="fas fa-plus"></i> Nuevo registro
             </a>
+            <a href="{{ list_url }}" class="btn btn-success btn-flat">
+                <i class="fas fa-sync"></i> Actualizar
+            </a>
         </div>
     </div>
 {% endblock %}
@@ -51,6 +55,7 @@
                 responsive: true,
                 autoWidth: false
             });
+
             $('.btnTest').on('click', function () {
                 $.ajax({
                     url: '{% url 'kardex:category_list' %}',
@@ -59,8 +64,8 @@
                     dataType: 'json'
                 }).done(function (data) {
                     console.log(data);
-                }).fail(function (data) {
-                    alert("error");
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus + ': ' + errorThrown);
                 }).always(function (data) {
 
                 });
