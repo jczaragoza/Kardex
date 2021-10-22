@@ -18,6 +18,9 @@ from django.urls import path, include
 from core.homepage.views import IndexView
 from core.login.views import *
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('login/', include('core.login.urls')),
@@ -25,3 +28,5 @@ urlpatterns = [
     path('kardex/', include('core.erp.urls')),
 
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
