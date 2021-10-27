@@ -6,9 +6,8 @@ function message_error(obj) {
             html += '<li>' + key + ': ' + value + '</li>';
         });
         html += '</ul>';
-    }
-    else{
-        html = '<p>'+obj+'</p>';
+    } else {
+        html = '<p>' + obj + '</p>';
     }
     Swal.fire({
         title: 'Error!',
@@ -38,6 +37,8 @@ function submit_with_ajax(url, title, content, parameters, callback) {
                         type: 'POST',
                         data: parameters,
                         dataType: 'json',
+                        processData: false,
+                        contentType: false,
                     }).done(function (data) {
                         console.log(data);
                         if (!data.hasOwnProperty('error')) {

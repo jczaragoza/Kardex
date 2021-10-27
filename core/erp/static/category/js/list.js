@@ -14,11 +14,10 @@ $(function () {
         },
         columns: [
             {"data": "id"},
-            {"data": "curp"},
-            {"data": "nombre"},
-            {"data": "apaterno"},
-            {"data": "amaterno"},
-            {"data": "Opciones"},
+            {"data": "curso"},
+            {"data": "categoria"},
+            {"data": "descripcion"},
+            {"data": "opcion"},
         ],
         columnDefs: [
             {

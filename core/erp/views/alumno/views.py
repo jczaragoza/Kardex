@@ -5,13 +5,16 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
 
-from core.erp.models import Curso
-from core.erp.forms import CursoForm
+from core.erp.models import Estado, Persona
+from core.erp.forms import PersonaForm
 
 
-class CursoListView(ListView):
-    model = Curso
-    template_name = 'category/list.html'
+class PersonaListView(ListView):
+    model = Persona
+    template_name = 'alumno/list.html'
+
+    # def get_queryset(self):
+    #    return Persona.objects.filter(curp__startswith='C')
 
     @method_decorator(csrf_exempt)
     @method_decorator(login_required)
@@ -24,7 +27,7 @@ class CursoListView(ListView):
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
-                for i in Curso.objects.all():
+                for i in Persona.objects.all():
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -34,18 +37,18 @@ class CursoListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Listado de cursos'
-        context['create_url'] = reverse_lazy('kardex:category_create')
-        context['list_url'] = reverse_lazy('kardex:category_list')
-        context['entity'] = 'Cursos'
+        context['title'] = ' Listado de Alumnos'
+        context['create_url'] = reverse_lazy('kardex:alumno_create')
+        context['list_url'] = reverse_lazy('kardex:alumno_list')
+        context['entity'] = 'Alumnos'
         return context
 
 
-class CursoCreateView(CreateView):
-    model = Curso
-    form_class = CursoForm
-    template_name = 'category/create.html'
-    success_url = reverse_lazy('kardex:category_list')
+class PersonaCreateView(CreateView):
+    model = Persona
+    form_class = PersonaForm
+    template_name = 'alumno/create.html'
+    success_url = reverse_lazy('kardex:alumno_list')
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -66,18 +69,18 @@ class CursoCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Crear Curso'
-        context['entity'] = 'Cursos'
-        context['list_url'] = reverse_lazy('kardex:category_list')
+        context['title'] = 'Crear de Alumno'
+        context['entity'] = 'Alumnos'
+        context['list_url'] = reverse_lazy('kardex:alumno_list')
         context['action'] = 'add'
         return context
 
 
-class CursoUpdateView(UpdateView):
-    model = Curso
-    form_class = CursoForm
-    template_name = 'category/create.html'
-    success_url = reverse_lazy('kardex:category_list')
+class PersonaUpdateView(UpdateView):
+    model = Persona
+    form_class = PersonaForm
+    template_name = 'alumno/create.html'
+    success_url = reverse_lazy('kardex:alumno_list')
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -99,17 +102,17 @@ class CursoUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Editar datos del curso'
-        context['entity'] = 'Cursos'
-        context['list_url'] = reverse_lazy('kardex:category_list')
+        context['title'] = 'Editar Datos de Alumno'
+        context['entity'] = 'Alumnos'
+        context['list_url'] = reverse_lazy('kardex:alumno_list')
         context['action'] = 'edit'
         return context
 
 
-class CursoDeleteView(DeleteView):
-    model = Curso
-    template_name = 'category/delete.html'
-    success_url = reverse_lazy('kardex:category_list')
+class PersonaDeleteView(DeleteView):
+    model = Persona
+    template_name = 'alumno/delete.html'
+    success_url = reverse_lazy('kardex:alumno_list')
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -126,16 +129,16 @@ class CursoDeleteView(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Borrar  Curso'
-        context['entity'] = 'Cursos'
-        context['list_url'] = reverse_lazy('kardex:category_list')
+        context['title'] = 'Borrar  Alumno'
+        context['entity'] = 'Alumnos'
+        context['list_url'] = reverse_lazy('kardex:alumno_list')
         return context
 
 
-class CursoFormView(FormView):
-    form_class = CursoForm
-    template_name = 'category/create.html'
-    success_url = reverse_lazy('kardex:category_list')
+class PersonaFormView(FormView):
+    form_class = PersonaForm
+    template_name = 'alumno/create.html'
+    success_url = reverse_lazy('kardex:alumno_list')
 
     def form_valid(self, form):
         print(form.is_valid())
@@ -149,8 +152,8 @@ class CursoFormView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Form | Curso'
-        context['entity'] = 'Cursos'
-        context['list_url'] = reverse_lazy('kardex:category_list')
+        context['title'] = 'Form | Alumnos'
+        context['entity'] = 'Alumnos'
+        context['list_url'] = reverse_lazy('kardex:alumno_list')
         context['action'] = 'add'
         return context

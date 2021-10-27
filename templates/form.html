@@ -1,8 +1,8 @@
 {% extends 'layout.html' %}
 {% load widget_tweaks %}
 {% block content %}
-    <form method="post" action=".">
-        <div class="card card-primary">
+    <form method="post" action="." enctype="multipart/form-data">
+        <div class="card card-default">
             <div class="card-header">
                 <h3 class="card-title">
                     {% if action == 'add' %}
@@ -41,13 +41,10 @@
                 <button type="submit" class="btn btn-primary btn-flat">
                     <i class="fas fa-save"></i> Guardar registro
                 </button>
-                <a href="{{ list_url }}" class="btn btn-danger btn-flat">
-                    <i class="fas fa-times"></i> Cancelar
-                </a>
             </div>
         </div>
     </form>
-        <script>
+    <script>
         {% if form.errors %}
             var errors = '';
             {% for field in form %}
@@ -67,7 +64,8 @@
 
         $('form').on('submit', function (e) {
             e.preventDefault();
-            var parameters = $(this).serializeArray();
+            //var parameters = $(this).serializeArray();
+            var parameters = new FormData(this);
             submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
                 location.href = '{{ list_url }}';
             });
