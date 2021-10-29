@@ -1,14 +1,10 @@
-#from crum import get_current_user
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.forms import model_to_dict
 from datetime import datetime
 
-from django.forms import model_to_dict
-
 from config.settings import MEDIA_URL, STATIC_URL
-#from core.models import BaseModel
 
-
-# from smart_selects.db_fields import ChainedForeignKey
 
 class Estado(models.Model):
     nombre = models.CharField(max_length=100)
@@ -32,13 +28,10 @@ class Colonia(models.Model):
     def __str__(self):
         return self.nombre
 
-
-class Persona(models.Model):
+class User(AbstractUser):
     curp = models.CharField(max_length=18, blank=True, unique=True, verbose_name='CURP')
-    nombre = models.CharField(max_length=25, verbose_name='Nombre')
-    apaterno = models.CharField(max_length=25, verbose_name='Apellido Paterno')
-    amaterno = models.CharField(max_length=25, verbose_name='Apellido Materno')
-    image = models.ImageField(upload_to='alumnos/%Y/%m/%d', null=True, blank=True)
+    secon_name = models.CharField(max_length=25, verbose_name='Apellido Materno')
+    image = models.ImageField(upload_to='users/%Y/%m/%d', null=True, blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True, verbose_name='Fechas de Nacimiento')
     lugar_nacimiento = models.CharField(max_length=255, blank=True, null=True, verbose_name='Lugar de Nacimiento')
     rfc = models.CharField(max_length=13, blank=True, verbose_name='RFC')
@@ -56,8 +49,8 @@ class Persona(models.Model):
     ]
     sexo = models.CharField(max_length=1, choices=sexos, default='F')
     domicilio = models.CharField(max_length=255, blank=True, null=True, verbose_name='Domicilio')
-    estado = models.ForeignKey(Estado, on_delete=models.SET_NULL, blank=True, null=True)
-
+    estado = models.ForeignKey(Estado, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Estado')
+    municipio = models.ForeignKey(Municipio, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Municipio')
     calle = models.TextField(max_length=40, blank=True, null=True, verbose_name='Calle')
     no = models.CharField(max_length=5, blank=True, verbose_name='Número')
     no_int = models.CharField(max_length=5, blank=True, verbose_name='Número Int.')
@@ -69,14 +62,8 @@ class Persona(models.Model):
         ('E', 'Extranjero')
     ]
     nacionalidad = models.CharField(max_length=1, choices=nacionalida_com, default='M')
-    correo = models.EmailField(max_length=50, blank=True, null=True, verbose_name='Correo')
     escolaridad = models.CharField(max_length=255, blank=True, verbose_name='Escolaridad')
 
-    # f_registo= models.DateField(default=datetime.now, verbose_name='Fecha de registro')
-    # f_modificado  = models.DateTimeField(auto_now=True, verbose_name='Fecha de modificación')
-
-    def __str__(self):
-        return self.nombre
 
     def get_image(self):
         if self.image:
@@ -89,22 +76,3 @@ class Persona(models.Model):
 
     class Meta:
         ordering = ['-id']
-
-
-class Curso(models.Model):
-    persona = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Persona')
-    curso = models.CharField(max_length=100, unique=True, verbose_name='Curso')
-    categoria = models.CharField(max_length=50, blank=True, null=True, verbose_name='Categoria')
-    descripcion = models.TextField(max_length=50, blank=True, null=True, verbose_name='Descripción')
-
-    def __str__(self):
-        return self.curso
-
-    def toJSON(self):
-        item = model_to_dict(self)
-        return item
-
-    class Meta:
-        verbose_name = 'Curso'
-        verbose_name_plural = 'Cursos'
-        ordering = ['id']

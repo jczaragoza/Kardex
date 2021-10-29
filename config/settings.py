@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'core.erp',
     'core.homepage',
     'core.login',
+    'core.user',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'crum.CurrentRequestUserMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -115,21 +117,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
-LOGIN_REDIRECT_URL = '/kardex/dashboard/'
+LOGIN_REDIRECT_URL = '/erp/dashboard/'
+
+LOGOUT_REDIRECT_URL = '/login/'
 
 LOGIN_URL = '/login/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 MEDIA_URL = '/media/'
+
+AUTH_USER_MODEL = 'user.User'
