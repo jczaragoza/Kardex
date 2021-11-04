@@ -3,6 +3,7 @@ from django.urls import path
 from core.erp.views.category.views import *
 from core.erp.views.alumno.views import *
 from core.erp.views.dashboard.views import *
+from core.erp.views.client.views import ClientView
 from core.erp.views.test.views import TestView
 
 app_name = 'kardex'
@@ -20,6 +21,8 @@ urlpatterns = [
     path('alumnos/update/<int:pk>/', PersonaUpdateView.as_view(), name='alumno_update'),
     path('alumnos/delete/<int:pk>/', PersonaDeleteView.as_view(), name='alumno_delete'),
     path('alumnos/form/', PersonaFormView.as_view(), name='alumno_form'),
+    # client
+    path('client/', ClientView.as_view(), name='client'),
     #Home
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     #Test

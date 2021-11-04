@@ -29,7 +29,7 @@ class Colonia(models.Model):
         return self.nombre
 
 class User(AbstractUser):
-    curp = models.CharField(max_length=18, blank=True, unique=True, verbose_name='CURP')
+    curp = models.CharField(max_length=18, blank=True, verbose_name='CURP')
     secon_name = models.CharField(max_length=25, verbose_name='Apellido Materno')
     image = models.ImageField(upload_to='users/%Y/%m/%d', null=True, blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True, verbose_name='Fechas de Nacimiento')
